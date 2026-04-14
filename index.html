@@ -1169,7 +1169,7 @@ function App(){
     {id:"standings",icon:"",label:"Ranking"},
     {id:"history",icon:"",label:"History"},
     {id:"decks",  icon:"",label:"Decks"},
-    {id:"settings",icon:"⚙︎",label:""},
+    {id:"settings",icon:"",label:""},
   ];
 
   /* ========================================================================== */
@@ -1714,7 +1714,7 @@ function App(){
         <div style={{display:"flex",maxWidth:520,margin:"0 auto"}}>
           {NAV.map(({id,icon,label})=>{const on=screen===id;return(
             <button key={id} className="nav-item" onClick={()=>id==="newgame"?startNewGame():setScreen(id)} style={{color:on?GOLD_LIGHT:"#3a3448",textShadow:on?"0 0 10px rgba(220,190,80,.45)":"none"}}>
-              <span style={{fontSize:id==="settings"?14:16,lineHeight:1,color:id==="settings"?(on?"#e8c860":"#3a3448"):"inherit",marginTop:id==="settings"?3:0}}>{icon}</span>
+              <span style={{fontSize:id==="settings"?15:16,lineHeight:1,color:id==="settings"?(on?"#e8c860":"#3a3448"):"inherit",marginTop:id==="settings"?3:0,fontFamily:"sans-serif"}}>{id==="settings"?"⚙":icon}</span>
               <span>{label}</span>
               {on&&<div style={{width:24,height:2,borderRadius:1,background:"linear-gradient(90deg,#7a1414,#c8901c,#7a1414)",marginTop:2,boxShadow:"0 0 8px rgba(180,120,20,.5)"}}/>}
             </button>
