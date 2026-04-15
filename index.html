@@ -47,15 +47,12 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script>
-    // Force clear old caches and unregister stale service workers
     if('serviceWorker' in navigator){
       navigator.serviceWorker.getRegistrations().then(function(regs){
         regs.forEach(function(r){ r.update(); });
       });
       caches.keys().then(function(keys){
-        keys.forEach(function(k){
-          if(k !== 'fwl-v3') caches.delete(k);
-        });
+        keys.forEach(function(k){ if(k!=='fwl-v3') caches.delete(k); });
       });
     }
   </script>
@@ -189,7 +186,7 @@ const css = \`
   /* Nav */
   .nav-item{
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-    padding:10px 0 12px;border:none;background:transparent;cursor:pointer;transition:all .2s;
+    padding:8px 4px 10px;border:none;background:transparent;cursor:pointer;transition:all .2s;
     font-family:'Cinzel',serif;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
   }
 
@@ -610,7 +607,27 @@ function DiceOverlay({sides,onClose}){
 }
 
 /* --- Companion-style Life Panel ------------------------------------------- */
-function haptic(ms=8){ try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(e){} }
+function haptic(ms=8){
+  try{
+    // Android / some browsers
+    if(navigator.vibrate){ navigator.vibrate(ms); return; }
+    // iOS PWA: trigger haptic via silent AudioContext click
+    const ctx=getGlobalCtx();
+    if(ctx){
+      const buf=ctx.createBuffer(1,1,22050);
+      const src=ctx.createBufferSource();
+      src.buffer=buf;
+      // Gain envelope creates a physical click sensation
+      const gain=ctx.createGain();
+      gain.gain.setValueAtTime(0,ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(ms>15?0.3:0.15,ctx.currentTime+0.001);
+      gain.gain.linearRampToValueAtTime(0,ctx.currentTime+0.01);
+      src.connect(gain);
+      gain.connect(ctx.destination);
+      src.start(0);
+    }
+  }catch(e){}
+}
 
 function PlayerPanel({idx,src,life,cmdDmg,opponents,onLife,onCmdDmg,rotation,isElim,compact}){
   const p=PLAYERS[idx];
@@ -1770,10 +1787,10 @@ function App(){
         )}
 
       {/* Bottom nav -- always visible */}
-      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:200,background:"rgba(10,8,14,.98)",backdropFilter:"blur(20px)",borderTop:"1px solid rgba(90,72,120,.32)",boxShadow:"0 -6px 28px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.03)",padding:"0 4px",zIndex:200,paddingBottom:"env(safe-area-inset-bottom, 20px)"}}>
+      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:200,background:"rgba(10,8,14,.98)",backdropFilter:"blur(20px)",borderTop:"1px solid rgba(90,72,120,.32)",boxShadow:"0 -6px 28px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.03)",padding:"4px 8px 0",zIndex:200,paddingBottom:"env(safe-area-inset-bottom, 16px)"}}>
         <div style={{display:"flex",maxWidth:520,margin:"0 auto"}}>
-          {NAV.map(({id,icon,label})=>{const on=screen===id;return(
-            <button key={id} className="nav-item" onClick={()=>id==="newgame"?startNewGame():setScreen(id)} style={{color:on?GOLD_LIGHT:"#3a3448",textShadow:on?"0 0 10px rgba(220,190,80,.45)":"none"}}>
+          {NAV.map(({id,icon,label})=>{const on=screen===id;const isGear=id==="settings";return(
+            <button key={id} className="nav-item" onClick={()=>id==="newgame"?startNewGame():setScreen(id)} style={{color:on?GOLD_LIGHT:"#3a3448",textShadow:on?"0 0 10px rgba(220,190,80,.45)":"none",flex:isGear?0.6:1}}>
               {id==="settings"?<span style={{color:on?"#e8c860":"#3a3448",display:"flex",marginTop:3}}><svg width="15" height="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"block"}}><path fill="currentColor" d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.92c.04-.34.07-.69.07-1.08s-.03-.74-.07-1.08l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.34-.07.69-.07 1.08s.03.74.07 1.08L2.46 13.57c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65Z"/></svg></span>:<span style={{fontSize:16,lineHeight:1,color:"inherit"}}>{icon}</span>}
               <span>{label}</span>
               {on&&<div style={{width:24,height:2,borderRadius:1,background:"linear-gradient(90deg,#7a1414,#c8901c,#7a1414)",marginTop:2,boxShadow:"0 0 8px rgba(180,120,20,.5)"}}/>}
