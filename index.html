@@ -659,18 +659,17 @@ function DiceOverlay({sides,onClose}){
           </div>
         </div>
 
-        {/* Result number — fixed height so nothing jumps */}
-        <div style={{height:90,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:6}}>
-          {result!=null&&(
-            <div key={result} className="dice-result-anim" style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
-              <div style={{fontFamily:"'Cinzel Decorative',serif",fontWeight:900,fontSize:64,
-                color:resultColor,lineHeight:1,
-                textShadow:\`0 0 30px \${resultColor}88\`}}>{result}</div>
-              {isCrit&&<div style={{fontSize:12,color:ORANGE,letterSpacing:3,textTransform:"uppercase",fontFamily:"'Cinzel',serif"}}>✦ Critical ✦</div>}
-              {isFail&&<div style={{fontSize:12,color:DEAD_RED,letterSpacing:3,textTransform:"uppercase",fontFamily:"'Cinzel',serif"}}>✕ Miss</div>}
-            </div>
-          )}
-          {rolling&&<div style={{fontFamily:"'Cinzel',serif",fontSize:14,color:PARCHMENT_DIM,letterSpacing:4,textTransform:"uppercase"}}>Rolling...</div>}
+        {/* Result number — always visible, fixed height, no jumping */}
+        <div style={{height:100,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:4}}>
+          <div style={{fontFamily:"'Cinzel Decorative',serif",fontWeight:900,fontSize:64,
+            color:rolling?\`\${TEAL}22\`:result!=null?resultColor:\`\${TEAL}22\`,lineHeight:1,
+            textShadow:result&&!rolling?\`0 0 30px \${resultColor}88\`:"none",
+            transition:"color .3s,text-shadow .3s",minWidth:"2ch",textAlign:"center"}}>
+            {rolling?"?":result??""}</div>
+          <div style={{height:20,display:"flex",alignItems:"center",justifyContent:"center"}}>
+            {result&&!rolling&&isCrit&&<div style={{fontSize:12,color:ORANGE,letterSpacing:3,textTransform:"uppercase",fontFamily:"'Cinzel',serif"}}>✦ Critical ✦</div>}
+            {result&&!rolling&&isFail&&<div style={{fontSize:12,color:DEAD_RED,letterSpacing:3,textTransform:"uppercase",fontFamily:"'Cinzel',serif"}}>✕ Miss</div>}
+          </div>
         </div>
 
         {/* History — fixed height */}
@@ -1467,11 +1466,11 @@ function App(){
   function renameDeck(pi,oldName,newName){
     const trimmed=newName.trim();
     if(!trimmed||trimmed===oldName)return;
-    // Update decks list
+    // Update decks list for owner
     setDecks(d=>({...d,[pi]:d[pi].map(x=>x===oldName?trimmed:x)}));
-    // Update all game history references
+    // Update all game history — any player who played this deck by this name
     setGames(g=>g.map(game=>({...game,
-      players:game.players?.map(p=>p.playerIdx===pi&&p.deck===oldName?{...p,deck:trimmed}:p)||game.players
+      players:game.players?.map(p=>p.deck===oldName?{...p,deck:trimmed}:p)||game.players
     })));
   }
 
