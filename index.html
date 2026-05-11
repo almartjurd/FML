@@ -925,14 +925,14 @@ function LifeTracker({activePlayers,avatars,setScreen,tableLife,setTableLife,tab
         // 2nd elimination
         const victim2=newDeaths[0];
         const possibleKillers2=activePlayers.filter(pi=>pi!==victim2&&!currentElim.has(pi));
-        setKillerPopup({victim:victim2,killers:possibleKillers2,deathNum:2});
+        setTimeout(()=>setKillerPopup({victim:victim2,killers:possibleKillers2,deathNum:2}),2000);
         const r=Math.random();
         setTimeout(()=>playTrackerSound(r<0.25?SND_SECOND1:r<0.5?SND_SECOND2:r<0.75?SND_SPREE:SND_DRAWING_BOARD),300);
       } else if(count===1){
         // 1st elimination
         const victim=newDeaths[0];
         const possibleKillers=activePlayers.filter(pi=>pi!==victim&&!currentElim.has(pi));
-        setKillerPopup({victim,killers:possibleKillers,deathNum:1});
+        setTimeout(()=>setKillerPopup({victim,killers:possibleKillers,deathNum:1}),2000);
         if(isCmdDeath){
           setTimeout(()=>playTrackerSound(SND_FIRST2),300);
         } else {
@@ -1439,7 +1439,8 @@ function App(){
   const [startLife,setStartLife]=useState(40);
   const [deleteConfirm,setDeleteConfirm]=useState(null);
   const [editGame,setEditGame]=useState(null); // game being edited (copy)
-  const [deckDeleteConfirm,setDeckDeleteConfirm]=useState(null); // holds game id to delete
+  const [deckDeleteConfirm,setDeckDeleteConfirm]=useState(null);
+  const [deckRename,setDeckRename]=useState(null); // {player, deck, newName} // holds game id to delete
 
   // new game
   const [step,setStep]=useState(1);
@@ -1463,6 +1464,16 @@ function App(){
   }
   function addDeck(){const t=newDeck.trim();if(!t)return;setDecks(d=>({...d,[dmPlayer]:[...(d[dmPlayer]||[]),t].sort((a,b)=>a.localeCompare(b))}));setNewDeck("");}
   function removeDeck(pi,dk){setDecks(d=>({...d,[pi]:d[pi].filter(x=>x!==dk)}));}
+  function renameDeck(pi,oldName,newName){
+    const trimmed=newName.trim();
+    if(!trimmed||trimmed===oldName)return;
+    // Update decks list
+    setDecks(d=>({...d,[pi]:d[pi].map(x=>x===oldName?trimmed:x)}));
+    // Update all game history references
+    setGames(g=>g.map(game=>({...game,
+      players:game.players?.map(p=>p.playerIdx===pi&&p.deck===oldName?{...p,deck:trimmed}:p)||game.players
+    })));
+  }
 
   function startNewGame(){
     setStep(1);setSelPlayers([0,1,2,3]);setWinnerIdx(null);
@@ -2150,6 +2161,26 @@ function App(){
         )}
 
         {/* Deck delete confirmation modal */}
+        {/* Deck Rename Modal */}
+        {deckRename&&(
+          <div onClick={()=>setDeckRename(null)} style={{position:"fixed",inset:0,zIndex:300,background:"rgba(0,0,0,.85)",display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+            <div onClick={e=>e.stopPropagation()} style={{background:"linear-gradient(175deg,#1e1c2a,#15121e)",borderRadius:12,padding:20,width:"100%",maxWidth:360,border:"1px solid rgba(90,72,120,.4)"}}>
+              <div style={{fontFamily:"'Cinzel',serif",fontSize:14,color:GOLD,letterSpacing:1,marginBottom:16,textAlign:"center"}}>Rename Deck</div>
+              <div style={{fontSize:11,color:PARCHMENT_DIM,fontFamily:"'IM Fell English',serif",fontStyle:"italic",marginBottom:10,textAlign:"center"}}>"{deckRename.deck}"</div>
+              <input
+                value={deckRename.newName}
+                onChange={e=>setDeckRename(r=>({...r,newName:e.target.value}))}
+                onKeyDown={e=>{if(e.key==="Enter"){renameDeck(deckRename.player,deckRename.deck,deckRename.newName);setDeckRename(null);}}}
+                autoFocus
+                style={{width:"100%",boxSizing:"border-box",padding:"10px 12px",background:"rgba(18,16,26,.85)",border:"1px solid rgba(90,72,120,.4)",borderRadius:6,color:PARCHMENT,fontSize:14,fontFamily:"'IM Fell English',serif",marginBottom:14,colorScheme:"dark"}}
+              />
+              <div style={{display:"flex",gap:8}}>
+                <button onClick={()=>setDeckRename(null)} style={{flex:1,padding:"10px",background:"rgba(18,16,26,.8)",border:"1px solid rgba(90,72,120,.3)",color:PARCHMENT_DIM,borderRadius:6,cursor:"pointer",fontFamily:"'Cinzel',serif",fontSize:12}}>Cancel</button>
+                <button onClick={()=>{renameDeck(deckRename.player,deckRename.deck,deckRename.newName);setDeckRename(null);}} style={{flex:2,padding:"10px",background:"rgba(80,60,140,.3)",border:"1px solid rgba(120,90,200,.5)",color:"#c0a0f0",borderRadius:6,cursor:"pointer",fontFamily:"'Cinzel',serif",fontSize:12,fontWeight:700}}>Save</button>
+              </div>
+            </div>
+          </div>
+        )}
         {deckDeleteConfirm&&(
           <div onClick={()=>setDeckDeleteConfirm(null)} style={{position:"fixed",inset:0,zIndex:300,background:"rgba(10,8,6,.94)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",padding:24}}>
             <div onClick={e=>e.stopPropagation()} style={{background:"linear-gradient(175deg,#1e1c2a,#15121e)",border:"1px solid rgba(100,85,45,.5)",borderRadius:12,boxShadow:"0 0 0 1px rgba(0,0,0,.8),0 20px 60px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05)",boxShadow:"0 0 0 1px #060300,0 8px 40px rgba(0,0,0,.9),inset 0 1px 0 rgba(200,140,40,.12)",padding:"28px 24px",maxWidth:300,width:"100%",textAlign:"center",position:"relative"}}>
@@ -2248,7 +2279,8 @@ function App(){
                         <div style={{display:"flex",alignItems:"center",gap:9,marginLeft:8,flex:1,cursor:"pointer"}} onClick={()=>setDeckDeleteConfirm({player:dmPlayer,deck:d})}><Dot idx={dmPlayer} size={8}/><span style={{fontSize:14,color:PARCHMENT,fontWeight:400,fontFamily:"'IM Fell English',serif"}}>{d}</span></div>
                         <div style={{display:"flex",alignItems:"center",gap:8}}>
                           {plays>0&&<span style={{fontSize:11,color:wins?PLAYERS[dmPlayer].text:PARCHMENT_DARK,fontFamily:"'Cinzel',serif",fontWeight:400}}>{wins}W/{plays}G</span>}
-                          
+                          <button onClick={()=>setDeckRename({player:dmPlayer,deck:d,newName:d})} style={{background:"none",border:"none",color:"#6a5870",cursor:"pointer",fontSize:15,padding:"2px 5px",lineHeight:1}}>✎</button>
+                          <button onClick={()=>setDeckDeleteConfirm({player:dmPlayer,deck:d})} style={{background:"none",border:"none",color:"#6a4a3a",cursor:"pointer",fontSize:16,padding:"2px 5px",lineHeight:1}}>✕</button>
                         </div>
                       </div>
                     );
