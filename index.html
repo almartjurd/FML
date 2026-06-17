@@ -45,7 +45,7 @@
   </script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.23.2/babel.min.js"></script>
   <script>
     if('serviceWorker' in navigator){
       navigator.serviceWorker.getRegistrations().then(function(regs){
@@ -2417,7 +2417,7 @@ root.render(React.createElement(App));
 `;
     try{
       document.getElementById('loader-sub').textContent='Starting...';
-      var out=Babel.transform(APP_CODE,{presets:['react']}).code;
+      var out=Babel.transform(APP_CODE,{presets:['react',['env',{targets:{safari:'13'}}]]}).code;
       var s=document.createElement('script');
       s.textContent=out;
       document.head.appendChild(s);
