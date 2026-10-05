@@ -894,6 +894,7 @@ function LifeTracker({activePlayers,avatars,setScreen,tableLife,setTableLife,tab
   const [coin,setCoin]=useState(false);
   const [showResetConfirm,setShowResetConfirm]=useState(false);
   const [showBoardwipe,setShowBoardwipe]=useState(false);
+  const [boardwipePlaying,setBoardwipePlaying]=useState(false);
   const boardwipeAudioRef=useRef(null);
   const elimCount=useRef(0);
   const prevElim=useRef(new Set());
@@ -1085,18 +1086,21 @@ function LifeTracker({activePlayers,avatars,setScreen,tableLife,setTableLife,tab
           <button onClick={()=>setDice(diceType)} style={{flex:1,padding:"7px 8px",background:"rgba(30,15,0,.8)",border:\`1px solid \${AMBER}66\`,color:AMBER,borderRadius:4,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m4 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2m6 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2M9 15a1 1 0 1 0 0 2 1 1 0 0 0 0-2m6-8a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-3 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg>Roll</button>
         </div>
         <button onClick={()=>{
-          if(showBoardwipe){
+          if(boardwipePlaying||showBoardwipe){
             if(boardwipeAudioRef.current){boardwipeAudioRef.current.pause();boardwipeAudioRef.current.currentTime=0;boardwipeAudioRef.current=null;}
             setShowBoardwipe(false);
+            setBoardwipePlaying(false);
           } else {
             const snd=BOARDWIPE_SOUNDS[Math.floor(Math.random()*BOARDWIPE_SOUNDS.length)];
             const audio=new Audio(snd);
             audio.volume=0.85;
             audio.play().catch(()=>{});
+            audio.onended=()=>{boardwipeAudioRef.current=null;setBoardwipePlaying(false);};
             boardwipeAudioRef.current=audio;
+            setBoardwipePlaying(true);
             setShowBoardwipe(true);
           }
-        }} style={{flex:1,padding:"7px 8px",background:showBoardwipe?"rgba(80,10,120,.9)":"rgba(15,5,25,.8)",border:"1px solid "+(showBoardwipe?"rgba(200,80,255,.7)":"rgba(150,50,200,.4)"),color:"#c060e0",borderRadius:6,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M12 2L9.5 8.5 3 9.27l5 4.73-1.5 6.5L12 17.27l5.5 3.23L16 14l5-4.73-6.5-.77L12 2Z"/></svg>Wipe</button>
+        }} style={{flex:1,padding:"7px 8px",background:(showBoardwipe||boardwipePlaying)?"rgba(80,10,120,.9)":"rgba(15,5,25,.8)",border:"1px solid "+((showBoardwipe||boardwipePlaying)?"rgba(200,80,255,.7)":"rgba(150,50,200,.4)"),color:"#c060e0",borderRadius:6,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M12 2L9.5 8.5 3 9.27l5 4.73-1.5 6.5L12 17.27l5.5 3.23L16 14l5-4.73-6.5-.77L12 2Z"/></svg>Wipe</button>
       </div>
 
       {/* Player panels grid */}
