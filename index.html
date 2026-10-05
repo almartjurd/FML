@@ -56,7 +56,7 @@
       });
     }
   </script>
-  <script>var APP_CODE=`const { useState, useEffect, useCallback, useRef } = React;
+  <script>var APP_CODE=`const {useState, useEffect, useCallback, useRef} = React;
 
 /* --- Fonts --------------------------------------------------------------- */
 const fl = document.createElement("link");
@@ -65,7 +65,7 @@ fl.href = "https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;9
 document.head.appendChild(fl);
 const vp=document.createElement('meta');
 vp.name='viewport';
-vp.content='width=device-width,initial-scale=1,viewport-fit=cover';
+vp.content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no';
 document.head.appendChild(vp);
 
 const css = \`
@@ -240,76 +240,6 @@ const css = \`
     0%{opacity:0}
     40%{opacity:.5}
     100%{opacity:.85}
-  }
-
-  /* ===== RESPONSIVE / TABLET ============================================= */
-  .page-content{
-    max-width:520px;
-    margin:0 auto;
-    position:relative;
-  }
-  @media (min-width:768px){
-    .page-content{
-      max-width:760px;
-      padding-left:20px;
-      padding-right:20px;
-    }
-    .nav-inner{
-      max-width:760px !important;
-    }
-    /* Surface cards side by side on wider screens */
-    .responsive-grid-2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
-    }
-    .responsive-grid-3{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:12px;
-    }
-  }
-  @media (min-width:1024px){
-    .page-content{
-      max-width:900px;
-    }
-    .nav-inner{
-      max-width:900px !important;
-    }
-  }
-  /* Stats 2-col grid on tablet */
-  @media (min-width:768px){
-    .stats-responsive-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:0 16px;
-      align-items:start;
-    }
-    .stats-responsive-grid>*{
-      min-width:0;
-    }
-    /* History cards 2-col grid */
-    .history-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-    .history-grid>div{
-      margin-bottom:0 !important;
-    }
-    /* Home setup 2-col: Lords + Table left, Life + Battle right */
-    .setup-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:0 16px;
-      align-items:start;
-    }
-    /* Decks - player columns side by side */
-    .decks-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:0 16px;
-    }
   }
 \`
 const se = document.createElement("style"); se.textContent = css; document.head.appendChild(se);
@@ -841,8 +771,8 @@ function PlayerPanel({idx,src,life,cmdDmg,opponents,onLife,onCmdDmg,rotation,isE
         onPointerDown={e=>{e.stopPropagation();holdFired.current=false;holdTimer.current=setTimeout(()=>{holdFired.current=true;onLife(-10);triggerDelta(-10);playGlobalSound(SND_DMG10);haptic(25);},400);}}
         onPointerUp={()=>{clearTimeout(holdTimer.current);if(!holdFired.current){onLife(-1);triggerDelta(-1);haptic();tapCount.current++;clearTimeout(tapReset.current);tapReset.current=setTimeout(()=>{tapCount.current=0;},1200);const v=Math.max(0.3,0.85-tapCount.current*0.07);playGlobalSound(SND_HIT,v);}}}
         onPointerLeave={()=>clearTimeout(holdTimer.current)}
-        style={{background:"transparent",borderRight:"1px solid rgba(255,255,255,.06)"}}>
-          <span style={{fontSize:compact?26:32,color:"rgba(255,255,255,.12)",fontWeight:900,fontFamily:"'Cinzel',serif"}}>-</span>
+        style={{background:"rgba(180,40,40,.07)",borderRight:"1px solid rgba(180,60,60,.15)"}}>
+          <span style={{fontSize:compact?40:52,color:"rgba(220,70,70,.65)",fontWeight:900,fontFamily:"'Cinzel',serif",lineHeight:1,textShadow:"0 0 14px rgba(220,60,60,.35)"}}>−</span>
         </div>
 
         {/* Center info */}
@@ -891,8 +821,8 @@ function PlayerPanel({idx,src,life,cmdDmg,opponents,onLife,onCmdDmg,rotation,isE
         onPointerDown={e=>{e.stopPropagation();holdFired.current=false;holdTimer.current=setTimeout(()=>{holdFired.current=true;onLife(+10);triggerDelta(+10);playGlobalSound(SND_HEAL10);haptic(25);},400);}}
         onPointerUp={()=>{clearTimeout(holdTimer.current);if(!holdFired.current){onLife(+1);triggerDelta(+1);haptic();tapCount.current++;clearTimeout(tapReset.current);tapReset.current=setTimeout(()=>{tapCount.current=0;},1200);const v=Math.max(0.3,0.85-tapCount.current*0.07);playGlobalSound(SND_HEAL,v);}}}
         onPointerLeave={()=>clearTimeout(holdTimer.current)}
-        style={{background:"transparent",borderLeft:"1px solid rgba(255,255,255,.06)"}}>
-          <span style={{fontSize:compact?26:32,color:"rgba(255,255,255,.12)",fontWeight:900,fontFamily:"'Cinzel',serif"}}>+</span>
+        style={{background:"rgba(40,160,70,.07)",borderLeft:"1px solid rgba(60,160,80,.15)"}}>
+          <span style={{fontSize:compact?40:52,color:"rgba(70,200,100,.65)",fontWeight:900,fontFamily:"'Cinzel',serif",lineHeight:1,textShadow:"0 0 14px rgba(60,190,80,.35)"}}>+</span>
         </div>
       </div>
 
@@ -1458,7 +1388,7 @@ function App(){
     {"playerIdx":0,"name":"Bas","deck":"Gisa, Glorius Resurrector","won":true,"couldaWon":false,"couldaNote":""},
     {"playerIdx":1,"name":"Koen","deck":"","won":false,"couldaWon":false,"couldaNote":""},
     {"playerIdx":2,"name":"Matti","deck":"","won":false,"couldaWon":false,"couldaNote":""},
-    {"playerIdx":3,"name":"Tjeerd","deck":"TLoP","won":false,"couldaWon":true,"couldaNote":"Should have won with TLoP \u2014 Bas stole the win by pushing for his turn, which Tjeerd gave him"}
+    {"playerIdx":3,"name":"Tjeerd","deck":"TLoP","won":false,"couldaWon":true,"couldaNote":"Should have won with TLoP \\u2014 Bas stole the win by pushing for his turn, which Tjeerd gave him"}
   ]},
   {"id":1771977600237,"date":"2026-02-25","location":"matti","playerCount":3,"players":[{"playerIdx":0,"name":"Bas","deck":"","won":false,"couldaWon":false,"couldaNote":""},{"playerIdx":1,"name":"Koen","deck":"","won":false,"couldaWon":false,"couldaNote":""},{"playerIdx":2,"name":"Matti","deck":"Arthur, Marigold Knight","won":true,"couldaWon":false,"couldaNote":""}]},
   {"id":1773187200009,"date":"2026-03-11","location":"matti","playerCount":2,"players":[{"playerIdx":2,"name":"Matti","deck":"Eldrizzle","won":false,"couldaWon":false,"couldaNote":""},{"playerIdx":3,"name":"Tjeerd","deck":"Uril, the Mistfarter","won":true,"couldaWon":false,"couldaNote":""}]},
@@ -1611,7 +1541,7 @@ function App(){
 
   /* ========================================================================== */
   return(
-    <div onTouchStart={unlockGlobalAudio} style={{minHeight:"100vh",background:\`url(\${APP_BG}) center top / min(100%, 900px) auto repeat-y #0e0c10\`,fontFamily:"'IM Fell English',serif",color:PARCHMENT,paddingBottom:110,position:"relative"}}>
+    <div onTouchStart={unlockGlobalAudio} style={{minHeight:"100vh",background:\`url(\${APP_BG}) center top / 100% auto repeat-y #0e0c10\`,fontFamily:"'IM Fell English',serif",color:PARCHMENT,paddingBottom:110,position:"relative"}}>
       {/* Readability overlay */}
       <div style={{position:"fixed",inset:0,background:"rgba(6,3,2,.22)",pointerEvents:"none",zIndex:0}}/>
 
@@ -1620,7 +1550,7 @@ function App(){
       {/* Header -- hidden on table */}
       {/* Full banner - Home only */}
       {screen==="home"&&(
-        <div style={{position:"relative",marginBottom:0,overflow:"hidden",maxWidth:900,margin:"0 auto"}}>
+        <div style={{position:"relative",marginBottom:0,overflow:"hidden"}}>
           <img src={HERO_BG} style={{width:"100%",height:"auto",display:"block",objectFit:"contain"}}/>
           <div style={{position:"absolute",top:"50%",left:0,right:0,textAlign:"center",transform:"translateY(-50%)"}}>
             <img src={LOGO_IMG} style={{width:"51%",maxWidth:184,display:"block",margin:"0 auto",filter:"drop-shadow(0 3px 6px rgba(0,0,0,.85)) drop-shadow(0 1px 3px rgba(0,0,0,.6))"}} alt="Fellow Magic Lords"/>
@@ -1630,7 +1560,7 @@ function App(){
 
       {/* Cropped banner - Record, Standings, History, Decks */}
       {(screen==="newgame"||screen==="standings"||screen==="history"||screen==="decks")&&(
-        <div style={{position:"relative",height:140,overflow:"hidden",marginBottom:0,maxWidth:900,marginLeft:"auto",marginRight:"auto"}}>
+        <div style={{position:"relative",height:140,overflow:"hidden",marginBottom:0}}>
           <img src={HERO_BG} style={{width:"100%",height:"auto",display:"block",objectFit:"cover",objectPosition:"center 28%"}}/>
           <div style={{position:"absolute",top:"50%",left:0,right:0,textAlign:"center",transform:"translateY(-50%)"}}>
             <img src={LOGO_IMG} style={{width:"38%",maxWidth:138,display:"block",margin:"0 auto",filter:"drop-shadow(0 3px 6px rgba(0,0,0,.85)) drop-shadow(0 1px 3px rgba(0,0,0,.6))"}} alt="Fellow Magic Lords"/>
@@ -1666,7 +1596,7 @@ function App(){
 
         {/* == HOME ========================================================== */}
         {screen==="home"&&(
-          <div className="fade-up page-content" style={{padding:"0 16px"}}>
+          <div className="fade-up">
             {/* Life Tracker Setup */}
             <Surface style={{padding:14,marginBottom:14}}>
               <div style={{fontFamily:"'Cinzel Decorative',serif",fontWeight:700,fontSize:18,color:GOLD,letterSpacing:2,textAlign:"center",marginBottom:16,textShadow:"0 0 20px rgba(212,168,64,.4)"}}>Life Tracker Setup</div>
@@ -1733,7 +1663,7 @@ function App(){
             </Surface>
 
             {/* Player cards */}
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(140px, 1fr))",gap:10,marginBottom:14}}>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
               {PLAYERS.map((p,i)=>{const s=allStats.find(x=>x.idx===i);return(
                 <div key={i} style={{
                   borderRadius:10,overflow:"hidden",position:"relative",
@@ -1789,7 +1719,7 @@ function App(){
 
         {/* == NEW GAME ====================================================== */}
         {screen==="newgame"&&(
-          <div className="fade-up page-content" style={{padding:"0 16px"}}>
+          <div className="fade-up">
             <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:18}}>
               {[["1","Players"],["2","Details"]].map(([n,lbl],i)=>(
                 <div key={n} style={{display:"flex",alignItems:"center",gap:6}}>
@@ -1889,7 +1819,7 @@ function App(){
 
         {/* == STANDINGS ==================================================== */}
         {screen==="standings"&&(
-          <div className="fade-up page-content" style={{padding:"0 16px"}}>
+          <div className="fade-up">
             <ScreenTitle>Stats</ScreenTitle>
             {/* Player composition filter */}
             <div style={{marginBottom:10}}>
@@ -1947,7 +1877,6 @@ function App(){
             );})}
             {games.length===0&&<Surface style={{padding:40,textAlign:"center"}}><p style={{color:"#4a3e28",fontStyle:"italic",fontSize:14}}>No games recorded yet.</p></Surface>}
 
-            <div className="stats-responsive-grid">
             {/* ── Win streaks ─────────────────────────────── */}
             {games.length>0&&(()=>{
               const streaks=PLAYERS.map((p,i)=>{
@@ -2088,7 +2017,6 @@ function App(){
                 </Surface>
               );
             })()}
-            </div>{/* end stats-responsive-grid */}
 
           </div>
         )}
@@ -2100,7 +2028,7 @@ function App(){
           const historyBase=(historyFilter==="all"?games:games.filter(g=>g.playerCount===(historyFilter==="4p"?4:historyFilter==="3p"?3:2))).slice().sort((a,b)=>new Date(b.date)-new Date(a.date));
           const yearFiltered=historyYear==="all"?historyBase:historyBase.filter(g=>g.date.startsWith(historyYear));
           return(
-          <div className="fade-up page-content" style={{padding:"0 16px"}}>
+          <div className="fade-up">
             <ScreenTitle>Game History</ScreenTitle>
             {/* Player count filter */}
             <div style={{display:"flex",gap:6,marginBottom:10}}>
@@ -2121,8 +2049,7 @@ function App(){
             </div>
             {yearFiltered.length===0
               ?<Surface style={{padding:40,textAlign:"center"}}><p style={{color:"#4a3e28",fontStyle:"italic"}}>No games in this category.</p></Surface>
-              :<div className="history-grid">
-              {yearFiltered.map(g=>{
+              :yearFiltered.map(g=>{
                 const winner=g.players?.find(p=>p.won);
                 const others=g.players?.filter(p=>!p.won)||[];
                 const wp=PLAYERS[winner?.playerIdx??0];
@@ -2178,8 +2105,7 @@ function App(){
                   </div>
                 </div>
                 );
-              })}
-            </div>
+              })
             }
           </div>
           );
@@ -2314,7 +2240,7 @@ function App(){
 
         {/* == DECKS ======================================================== */}
         {screen==="decks"&&(
-          <div className="fade-up page-content" style={{padding:"0 16px"}}>
+          <div className="fade-up">
             <ScreenTitle>Decks</ScreenTitle>
             {dkStats.length>0&&(
               <Surface style={{padding:16,marginBottom:16}}>
@@ -2390,7 +2316,7 @@ function App(){
 
       {/* == SETTINGS ====================================================== */}
         {screen==="settings"&&(
-          <div className="fade-up page-content" style={{padding:"0 16px 20px",minHeight:"100vh"}}>
+          <div className="fade-up" style={{padding:"0 16px 20px",minHeight:"100vh"}}>
             <ScreenTitle>Settings</ScreenTitle>
 
             <Surface style={{padding:16,marginBottom:14}}>
@@ -2462,7 +2388,7 @@ function App(){
 
       {/* Bottom nav -- always visible */}
       <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:200,background:"rgba(10,8,14,.98)",backdropFilter:"blur(20px)",borderTop:"1px solid rgba(90,72,120,.32)",boxShadow:"0 -6px 28px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.03)",padding:"4px 8px 0",zIndex:200,paddingBottom:"env(safe-area-inset-bottom, 16px)",height:"calc(56px + env(safe-area-inset-bottom, 16px))"}}>
-        <div className="nav-inner" style={{display:"flex",maxWidth:520,margin:"0 auto"}}>
+        <div style={{display:"flex",maxWidth:520,margin:"0 auto"}}>
           {NAV.map(({id,label})=>{
             const on=screen===id;
             const isGear=id==="settings";
@@ -2485,6 +2411,7 @@ function App(){
     </div>
   );
 }
+
 const root=ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(App));
 `;
