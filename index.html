@@ -1096,7 +1096,7 @@ function LifeTracker({activePlayers,avatars,setScreen,tableLife,setTableLife,tab
             boardwipeAudioRef.current=audio;
             setShowBoardwipe(true);
           }
-        }} style={{flex:1,padding:"7px 8px",background:showBoardwipe?"rgba(80,10,120,.9)":"rgba(15,5,25,.8)",border:`1px solid ${showBoardwipe?"rgba(200,80,255,.7)":"rgba(150,50,200,.4)"}`,color:"#c060e0",borderRadius:6,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M12 2L9.5 8.5 3 9.27l5 4.73-1.5 6.5L12 17.27l5.5 3.23L16 14l5-4.73-6.5-.77L12 2Z"/></svg>Wipe</button>
+        }} style={{flex:1,padding:"7px 8px",background:showBoardwipe?"rgba(80,10,120,.9)":"rgba(15,5,25,.8)",border:"1px solid "+(showBoardwipe?"rgba(200,80,255,.7)":"rgba(150,50,200,.4)"),color:"#c060e0",borderRadius:6,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M12 2L9.5 8.5 3 9.27l5 4.73-1.5 6.5L12 17.27l5.5 3.23L16 14l5-4.73-6.5-.77L12 2Z"/></svg>Wipe</button>
       </div>
 
       {/* Player panels grid */}
