@@ -68,7 +68,7 @@ vp.name='viewport';
 vp.content='width=device-width,initial-scale=1,viewport-fit=cover';
 document.head.appendChild(vp);
 
-const css = `
+const css = \`
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html,body{background:#0e0c10;height:100%;overflow-x:hidden}
   body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.055;mix-blend-mode:overlay}
@@ -311,7 +311,7 @@ const css = `
       gap:0 16px;
     }
   }
-`
+\`
 const se = document.createElement("style"); se.textContent = css; document.head.appendChild(se);
 
 /* --- Config --------------------------------------------------------------- */
@@ -347,23 +347,23 @@ const load=()=>{try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):nul
 const persist=d=>{try{localStorage.setItem(KEY,JSON.stringify(d))}catch{}};
 
 /* --- Micro-UI ------------------------------------------------------------- */
-function Dot({idx,size=10}){const c=PLAYERS[idx].color;return <span style={{display:"inline-block",width:size,height:size,borderRadius:"50%",background:c,flexShrink:0,boxShadow:`0 0 5px ${c}88`}}/>}
+function Dot({idx,size=10}){const c=PLAYERS[idx].color;return <span style={{display:"inline-block",width:size,height:size,borderRadius:"50%",background:c,flexShrink:0,boxShadow:\`0 0 5px \${c}88\`}}/>}
 
 function Avatar({idx,src,size=40,showUpload,onUpload}){
   const p=PLAYERS[idx];
   return(
     <div style={{position:"relative",flexShrink:0,width:size,height:size}}>
       {src
-        ?<img src={src} style={{width:size,height:size,borderRadius:"50%",objectFit:"cover",border:`2.5px solid ${p.color}99`,boxShadow:`0 0 14px ${p.color}44`}}/>
-        :<div style={{width:size,height:size,borderRadius:"50%",background:`radial-gradient(circle at 38% 32%,${p.color}cc,${p.color}28)`,border:`2.5px solid ${p.color}55`,boxShadow:`0 0 14px ${p.color}33`,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Cinzel',serif",fontWeight:800,fontSize:size*.38,color:"#fff",textShadow:"0 2px 6px rgba(0,0,0,.8)"}}>{p.name[0]}</div>
+        ?<img src={src} style={{width:size,height:size,borderRadius:"50%",objectFit:"cover",border:\`2.5px solid \${p.color}99\`,boxShadow:\`0 0 14px \${p.color}44\`}}/>
+        :<div style={{width:size,height:size,borderRadius:"50%",background:\`radial-gradient(circle at 38% 32%,\${p.color}cc,\${p.color}28)\`,border:\`2.5px solid \${p.color}55\`,boxShadow:\`0 0 14px \${p.color}33\`,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Cinzel',serif",fontWeight:800,fontSize:size*.38,color:"#fff",textShadow:"0 2px 6px rgba(0,0,0,.8)"}}>{p.name[0]}</div>
       }
-      {showUpload&&<label style={{position:"absolute",bottom:0,right:0,width:22,height:22,borderRadius:"50%",background:"#0d0802",border:`1.5px solid ${TEAL}66`,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:10}}><input type="file" accept="image/*" style={{display:"none"}} onChange={onUpload}/></label>}
+      {showUpload&&<label style={{position:"absolute",bottom:0,right:0,width:22,height:22,borderRadius:"50%",background:"#0d0802",border:\`1.5px solid \${TEAL}66\`,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:10}}><input type="file" accept="image/*" style={{display:"none"}} onChange={onUpload}/></label>}
     </div>
   );
 }
 
 function ScreenTitle({children}){return(<div><p className="screen-title">{children}</p><div className="title-divider"/></div>);}
-function Chip({children,color}){return <span style={{display:"inline-flex",alignItems:"center",gap:4,padding:"2px 8px",borderRadius:3,background:`${color}28`,color,border:`1px solid ${color}55`,fontFamily:"'IM Fell English',serif",fontSize:11,letterSpacing:.5}}>{children}</span>}
+function Chip({children,color}){return <span style={{display:"inline-flex",alignItems:"center",gap:4,padding:"2px 8px",borderRadius:3,background:\`\${color}28\`,color,border:\`1px solid \${color}55\`,fontFamily:"'IM Fell English',serif",fontSize:11,letterSpacing:.5}}>{children}</span>}
 function Surface({children,style}){return <div className="card-frame" style={{position:"relative",borderRadius:12,...style}}>{children}</div>}
 function Divider(){return <div style={{height:1,background:"linear-gradient(90deg,transparent,rgba(140,108,40,.4),rgba(190,150,55,.7),rgba(210,170,60,.85),rgba(190,150,55,.7),rgba(140,108,40,.4),transparent)",margin:"12px -16px"}}/>}
 function SLabel({children,style}){return <p className="section-label" style={{...style}}>{children}</p>}
@@ -472,7 +472,7 @@ function CoinOverlay({onClose}){
     const styleId='fwl-coin-kf';
     let el=document.getElementById(styleId);
     if(!el){el=document.createElement('style');el.id=styleId;document.head.appendChild(el);}
-    el.textContent=`@keyframes fwlCoinSpin{from{transform:rotateX(${fromRot}deg)}to{transform:rotateX(${target}deg)}}`;
+    el.textContent=\`@keyframes fwlCoinSpin{from{transform:rotateX(\${fromRot}deg)}to{transform:rotateX(\${target}deg)}}\`;
 
     const coinEl=document.getElementById('fwl-coin-inner');
     if(coinEl){
@@ -509,7 +509,7 @@ function CoinOverlay({onClose}){
     setTimeout(()=>{
       setFlipping(false);
       const coinEl=document.getElementById('fwl-coin-inner');
-      if(coinEl){coinEl.style.animation='none';coinEl.style.transform=`rotateX(${target}deg)`;}
+      if(coinEl){coinEl.style.animation='none';coinEl.style.transform=\`rotateX(\${target}deg)\`;}
     },900);
   }
 
@@ -530,7 +530,7 @@ function CoinOverlay({onClose}){
           {[1,2,3,4,5].map(n=>(
             <div key={n} style={{
               width:32,height:32,borderRadius:"50%",
-              border:`2px solid ${n<=streakDisplay?"#d4a840":"#3a2e18"}`,
+              border:\`2px solid \${n<=streakDisplay?"#d4a840":"#3a2e18"}\`,
               background:n<=streakDisplay?"rgba(180,130,20,.2)":"#1a1620",
               display:"flex",alignItems:"center",justifyContent:"center",
               fontFamily:"'Cinzel',serif",fontSize:9,fontWeight:700,
@@ -544,7 +544,7 @@ function CoinOverlay({onClose}){
         {/* 3-D coin container */}
         <div style={{width:200,height:200,position:"relative",perspective:600,flexShrink:0}}>
           {/* Glow layer — opacity transition works on Safari */}
-          <div style={{position:"absolute",inset:-60,borderRadius:"50%",background:`radial-gradient(ellipse at 50% 50%,${landed?glowColor:"rgba(200,160,40,.15)"} 0%,${landed?glowColor.replace("88","44"):"transparent"} 35%,transparent 65%)`,opacity:landed?1:0,transition:"opacity .5s ease",pointerEvents:"none",zIndex:0}}/>
+          <div style={{position:"absolute",inset:-60,borderRadius:"50%",background:\`radial-gradient(ellipse at 50% 50%,\${landed?glowColor:"rgba(200,160,40,.15)"} 0%,\${landed?glowColor.replace("88","44"):"transparent"} 35%,transparent 65%)\`,opacity:landed?1:0,transition:"opacity .5s ease",pointerEvents:"none",zIndex:0}}/>
           <div id="fwl-coin-inner" style={{width:"100%",height:"100%",position:"relative",transformStyle:"preserve-3d",transform:"rotateX(0deg)"}}>
             <div style={{position:"absolute",inset:0,borderRadius:"50%",overflow:"hidden",backfaceVisibility:"hidden",WebkitBackfaceVisibility:"hidden"}}>
               <img src={COIN_HEADS} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
@@ -560,7 +560,7 @@ function CoinOverlay({onClose}){
         {/* Result area */}
         <div style={{height:90,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",marginTop:8}}>
           {landed&&(
-            <div style={{fontFamily:"'Cinzel Decorative',serif",fontWeight:900,fontSize:54,color:resultColor,letterSpacing:3,textShadow:`0 0 50px ${glowColor}`,lineHeight:1,animation:"coinResultPop .35s cubic-bezier(.34,1.56,.64,1) forwards"}}>{result}</div>
+            <div style={{fontFamily:"'Cinzel Decorative',serif",fontWeight:900,fontSize:54,color:resultColor,letterSpacing:3,textShadow:\`0 0 50px \${glowColor}\`,lineHeight:1,animation:"coinResultPop .35s cubic-bezier(.34,1.56,.64,1) forwards"}}>{result}</div>
           )}
           {flipping&&(
             <div style={{fontFamily:"'Cinzel',serif",fontWeight:400,fontSize:20,color:PARCHMENT_DIM,letterSpacing:3,opacity:.5}}>Flipping...</div>
@@ -639,26 +639,26 @@ function D20Face({value,size=130,color,isCrit,isFail}){
 function DiceShape({sides,size=140,color,children,rolling=false}){
   const c=size/2,r=size*.46;
   // D10: classic diamond/kite — tall top point, wide middle, short bottom
-  const d10=`${c},${size*.05} ${size*.94},${c} ${c},${size*.95} ${size*.06},${c}`;
+  const d10=\`\${c},\${size*.05} \${size*.94},\${c} \${c},\${size*.95} \${size*.06},\${c}\`;
   // D20: equilateral triangle (face of icosahedron) with inner triangle detail
-  const d20=`${c},${size*.05} ${size*.95},${size*.88} ${size*.05},${size*.88}`;
+  const d20=\`\${c},\${size*.05} \${size*.95},\${size*.88} \${size*.05},\${size*.88}\`;
   const pts={
-    4:`${c},${size*.06} ${size*.93},${size*.90} ${size*.07},${size*.90}`,
-    8:`${c},${size*.05} ${size*.93},${c} ${c},${size*.95} ${size*.07},${c}`,
+    4:\`\${c},\${size*.06} \${size*.93},\${size*.90} \${size*.07},\${size*.90}\`,
+    8:\`\${c},\${size*.05} \${size*.93},\${c} \${c},\${size*.95} \${size*.07},\${c}\`,
     10:d10,
-    12:(()=>{const p=[];for(let i=0;i<5;i++){const a=(i*72-90)*Math.PI/180,a2=((i+.5)*72-90)*Math.PI/180;p.push(`${c+r*.97*Math.cos(a)},${c+r*.97*Math.sin(a)}`);p.push(`${c+r*.6*Math.cos(a2)},${c+r*.6*Math.sin(a2)}`);}return p.join(' ');})(),
+    12:(()=>{const p=[];for(let i=0;i<5;i++){const a=(i*72-90)*Math.PI/180,a2=((i+.5)*72-90)*Math.PI/180;p.push(\`\${c+r*.97*Math.cos(a)},\${c+r*.97*Math.sin(a)}\`);p.push(\`\${c+r*.6*Math.cos(a2)},\${c+r*.6*Math.sin(a2)}\`);}return p.join(' ');})(),
     20:d20,
   };
   const shape=pts[sides]||pts[20];
-  const gId=`dg${sides}`;
+  const gId=\`dg\${sides}\`;
   return(
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} overflow="visible">
+    <svg width={size} height={size} viewBox={\`0 0 \${size} \${size}\`} overflow="visible">
       <defs>
         <linearGradient id={gId} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#1e2440"/>
           <stop offset="100%" stopColor="#0e1020"/>
         </linearGradient>
-        <filter id={`gf${sides}`} x="-40%" y="-40%" width="180%" height="180%">
+        <filter id={\`gf\${sides}\`} x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="8" result="blur"/>
           <feFlood floodColor={color} floodOpacity="0.6" result="color"/>
           <feComposite in="color" in2="blur" operator="in" result="glow"/>
@@ -666,11 +666,11 @@ function DiceShape({sides,size=140,color,children,rolling=false}){
         </filter>
       </defs>
       {sides===6
-        ?<rect x={size*.06} y={size*.06} width={size*.88} height={size*.88} rx={size*.15} fill={`url(#${gId})`} stroke={color} strokeWidth="2.5" filter={`url(#gf${sides})`}/>
+        ?<rect x={size*.06} y={size*.06} width={size*.88} height={size*.88} rx={size*.15} fill={\`url(#\${gId})\`} stroke={color} strokeWidth="2.5" filter={\`url(#gf\${sides})\`}/>
         :sides===100
-        ?<circle cx={c} cy={c} r={r} fill={`url(#${gId})`} stroke={color} strokeWidth="2.5" filter={`url(#gf${sides})`}/>
+        ?<circle cx={c} cy={c} r={r} fill={\`url(#\${gId})\`} stroke={color} strokeWidth="2.5" filter={\`url(#gf\${sides})\`}/>
         :<>
-          <polygon points={shape} fill={`url(#${gId})`} stroke={color} strokeWidth="2.5" filter={`url(#gf${sides})`}/>
+          <polygon points={shape} fill={\`url(#\${gId})\`} stroke={color} strokeWidth="2.5" filter={\`url(#gf\${sides})\`}/>
 
         </>
       }
@@ -721,7 +721,7 @@ function DiceOverlay({sides,onClose}){
               ?<D6Face value={result} size={180} color={resultColor}/>
               :<DiceShape sides={sides} size={180} color={diceColor} rolling={rolling}>
                 <text x="50%" y={sides===4?"60%":sides===20?"58%":sides===12?"46%":"50%"} textAnchor="middle" dy=".35em"
-                  fill={rolling?`${TEAL}44`:resultColor}
+                  fill={rolling?\`\${TEAL}44\`:resultColor}
                   fontFamily="'Cinzel Decorative',serif"
                   fontSize={result&&result>99?"22":result&&result>9?"30":"38"} fontWeight="900">
                   {rolling?"?":result??""}</text>
@@ -733,8 +733,8 @@ function DiceOverlay({sides,onClose}){
         {/* Result number — always visible, fixed height, no jumping */}
         <div style={{height:100,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:4}}>
           <div style={{fontFamily:"'Cinzel Decorative',serif",fontWeight:900,fontSize:64,
-            color:rolling?`${TEAL}22`:result!=null?resultColor:`${TEAL}22`,lineHeight:1,
-            textShadow:result&&!rolling?`0 0 30px ${resultColor}88`:"none",
+            color:rolling?\`\${TEAL}22\`:result!=null?resultColor:\`\${TEAL}22\`,lineHeight:1,
+            textShadow:result&&!rolling?\`0 0 30px \${resultColor}88\`:"none",
             transition:"color .3s,text-shadow .3s",minWidth:"2ch",textAlign:"center"}}>
             {rolling?"?":result??""}</div>
           <div style={{height:20,display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -824,17 +824,17 @@ function PlayerPanel({idx,src,life,cmdDmg,opponents,onLife,onCmdDmg,rotation,isE
 
   return(
     <div ref={panelRef}
-      style={{width:"100%",height:"100%",position:"relative",overflow:"hidden",background:`radial-gradient(ellipse at 50% 30%,${p.color}28 0%,#0e0c10 65%)`,outline:swapPending?"3px solid #e8c860":"none",outlineOffset:"-3px",borderRadius:8}}>
+      style={{width:"100%",height:"100%",position:"relative",overflow:"hidden",background:\`radial-gradient(ellipse at 50% 30%,\${p.color}28 0%,#0e0c10 65%)\`,outline:swapPending?"3px solid #e8c860":"none",outlineOffset:"-3px",borderRadius:8}}>
       {/* Big tap zones: left = minus, right = plus */}
       <div onPointerDown={e=>{if(onLongPress){const t=setTimeout(onLongPress,600);e.currentTarget._st=t;}}} onPointerUp={e=>clearTimeout(e.currentTarget._st)} onPointerLeave={e=>clearTimeout(e.currentTarget._st)} style={is90&&dims.w>0?{
         position:"absolute",
         width:dims.h,height:dims.w,
         top:"50%",left:"50%",
-        transform:`translate(-50%,-50%) rotate(${rotation}deg)`,
+        transform:\`translate(-50%,-50%) rotate(\${rotation}deg)\`,
         display:"flex",
       }:{
         position:"absolute",inset:0,display:"flex",
-        transform:`rotate(${rotation}deg)`,transformOrigin:"50% 50%",
+        transform:\`rotate(\${rotation}deg)\`,transformOrigin:"50% 50%",
       }}>
         {/* Minus zone */}
         <div className="big-tap"
@@ -849,12 +849,12 @@ function PlayerPanel({idx,src,life,cmdDmg,opponents,onLife,onCmdDmg,rotation,isE
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:tiny?3:compact?6:10,minWidth:0,pointerEvents:"none"}}>
           <Avatar idx={idx} src={src} size={tiny?28:compact?51:63}/>
           <span style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:tiny?10:compact?13:15,color:"rgba(220,175,80,.75)",textTransform:"uppercase",letterSpacing:2}}>{p.name}</span>
-          <div style={{fontFamily:"'Cinzel Decorative',serif",fontWeight:900,fontSize:bigLife?60:tiny?52:compact?64:88,color:lifeColor,lineHeight:.85,marginTop:tiny?4:compact?10:16,marginBottom:tiny?6:compact?14:20,minWidth:bigLife?"2.2ch":tiny?"2.2ch":compact?"2.2ch":"2.2ch",textAlign:"center",textShadow:`0 0 40px ${lifeColor}cc,0 0 80px ${lifeColor}55,0 2px 4px rgba(0,0,0,.9)`}}>
+          <div style={{fontFamily:"'Cinzel Decorative',serif",fontWeight:900,fontSize:bigLife?60:tiny?52:compact?64:88,color:lifeColor,lineHeight:.85,marginTop:tiny?4:compact?10:16,marginBottom:tiny?6:compact?14:20,minWidth:bigLife?"2.2ch":tiny?"2.2ch":compact?"2.2ch":"2.2ch",textAlign:"center",textShadow:\`0 0 40px \${lifeColor}cc,0 0 80px \${lifeColor}55,0 2px 4px rgba(0,0,0,.9)\`}}>
             {life}
           </div>
           {/* Commander damage button + delta */}
           <div style={{display:"flex",flexDirection:"column",alignItems:"stretch",gap:4,pointerEvents:"all"}}>
-          <button onClick={e=>{e.stopPropagation();setShowCmd(s=>!s);}} style={{width:"100%",padding:"10px 10px",borderRadius:6,background:totalCmd>0?"rgba(140,80,200,.18)":"rgba(255,255,255,.05)",border:`1px solid ${maxCmd>=21?DEAD_RED:totalCmd>0?"rgba(140,80,200,.5)":"rgba(255,255,255,.12)"}`,color:maxCmd>=21?DEAD_RED:totalCmd>0?"#c090f0":"rgba(255,255,255,.35)",fontFamily:"'Cinzel',serif",fontWeight:600,fontSize:12,cursor:"pointer",pointerEvents:"all",letterSpacing:.5}}>
+          <button onClick={e=>{e.stopPropagation();setShowCmd(s=>!s);}} style={{width:"100%",padding:"10px 10px",borderRadius:6,background:totalCmd>0?"rgba(140,80,200,.18)":"rgba(255,255,255,.05)",border:\`1px solid \${maxCmd>=21?DEAD_RED:totalCmd>0?"rgba(140,80,200,.5)":"rgba(255,255,255,.12)"}\`,color:maxCmd>=21?DEAD_RED:totalCmd>0?"#c090f0":"rgba(255,255,255,.35)",fontFamily:"'Cinzel',serif",fontWeight:600,fontSize:12,cursor:"pointer",pointerEvents:"all",letterSpacing:.5}}>
             &#x2694;&#xFE0F; CMD
           </button>
           {/* Delta indicator */}
@@ -864,7 +864,7 @@ function PlayerPanel({idx,src,life,cmdDmg,opponents,onLife,onCmdDmg,rotation,isE
                 fontFamily:"'Cinzel Decorative',serif",fontWeight:900,
                 fontSize:compact?15:17,
                 color:delta<0?DEAD_RED:VICTORY_GREEN,
-                textShadow:`0 0 14px ${delta<0?DEAD_RED:VICTORY_GREEN}99`,
+                textShadow:\`0 0 14px \${delta<0?DEAD_RED:VICTORY_GREEN}99\`,
                 opacity:deltaVisible?1:0,
                 transition:"opacity .4s ease",
                 letterSpacing:1,
@@ -902,7 +902,7 @@ function PlayerPanel({idx,src,life,cmdDmg,opponents,onLife,onCmdDmg,rotation,isE
           position:"absolute",
           width:dims.h-4,height:dims.w-4,
           top:"50%",left:"50%",
-          transform:`translate(-50%,-50%) rotate(${rotation}deg)`,
+          transform:\`translate(-50%,-50%) rotate(\${rotation}deg)\`,
           background:"rgba(10,8,14,.97)",borderRadius:8,backdropFilter:"blur(8px)",
           display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
           gap:tiny?4:8,zIndex:20,overflowY:"auto",padding:"6px 4px",
@@ -911,18 +911,18 @@ function PlayerPanel({idx,src,life,cmdDmg,opponents,onLife,onCmdDmg,rotation,isE
           background:"rgba(10,8,14,.97)",borderRadius:8,backdropFilter:"blur(8px)",
           display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
           gap:tiny?4:10,zIndex:20,overflowY:"auto",padding:tiny?"4px":"8px",
-          transform:`rotate(${rotation}deg)`,transformOrigin:"50% 50%",
+          transform:\`rotate(\${rotation}deg)\`,transformOrigin:"50% 50%",
         }}>
           <div style={{fontSize:tiny?9:11,fontWeight:400,color:PARCHMENT_DIM,textTransform:"uppercase",letterSpacing:2,marginBottom:4,fontFamily:"'Cinzel',serif"}}>CMD Damage Received</div>
           {opponents.map(atkIdx=>{
             const atk=PLAYERS[atkIdx]; const v=cmdDmg?.[atkIdx]||0;
             return(
-              <div key={atkIdx} style={{display:"flex",alignItems:"center",gap:6,padding:"4px 8px",borderRadius:6,background:`${atk.color}18`,border:`1px solid ${atk.color}44`,width:"auto"}}>
+              <div key={atkIdx} style={{display:"flex",alignItems:"center",gap:6,padding:"4px 8px",borderRadius:6,background:\`\${atk.color}18\`,border:\`1px solid \${atk.color}44\`,width:"auto"}}>
                 <Avatar idx={atkIdx} src={src} size={18}/>
                 <span style={{fontFamily:"'Cinzel',serif",fontWeight:600,fontSize:11,color:atk.color,textTransform:"uppercase",letterSpacing:.3,minWidth:52,flexShrink:0}}>{atk.name}</span>
                 <button onClick={()=>{onCmdDmg(atkIdx,-1);haptic();playGlobalSound(SND_HIT);}} style={{width:22,height:22,borderRadius:4,background:"#80201022",border:"1px solid #80201044",color:DEAD_RED,cursor:"pointer",fontSize:14,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>-</button>
                 <span style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:tiny?14:20,color:v>=21?DEAD_RED:v>0?atk.color:"#4a3e28",minWidth:28,textAlign:"center",flexShrink:0}}>{v}</span>
-                <button onClick={()=>{onCmdDmg(atkIdx,+1);haptic();playGlobalSound(SND_HEAL);}} style={{width:22,height:22,borderRadius:4,background:`${atk.color}22`,border:`1px solid ${atk.color}44`,color:atk.color,cursor:"pointer",fontSize:14,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>+</button>
+                <button onClick={()=>{onCmdDmg(atkIdx,+1);haptic();playGlobalSound(SND_HEAL);}} style={{width:22,height:22,borderRadius:4,background:\`\${atk.color}22\`,border:\`1px solid \${atk.color}44\`,color:atk.color,cursor:"pointer",fontSize:14,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>+</button>
               </div>
             );
           })}
@@ -1115,7 +1115,7 @@ function LifeTracker({activePlayers,avatars,setScreen,tableLife,setTableLife,tab
                   <button key={ki} onClick={()=>{
                     if(setGames) setGames(prev=>{const g=[...prev];if(g[0]){const kills=g[0].kills||{};kills[killerPopup.victim]=ki;g[0]={...g[0],kills,firstBlood:killerPopup.deathNum===1?{victim:killerPopup.victim,killer:ki}:g[0].firstBlood};}return g;});
                     setKillerPopup(null);
-                  }} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 12px",borderRadius:8,border:`1px solid ${kp.color}55`,background:`${kp.color}18`,cursor:"pointer",transition:"all .15s"}}>
+                  }} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 12px",borderRadius:8,border:\`1px solid \${kp.color}55\`,background:\`\${kp.color}18\`,cursor:"pointer",transition:"all .15s"}}>
                     <Avatar idx={ki} src={avatars[ki]} size={28}/>
                     <span style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:13,color:kp.color}}>{kp.name}</span>
                   </button>
@@ -1132,12 +1132,12 @@ function LifeTracker({activePlayers,avatars,setScreen,tableLife,setTableLife,tab
         {setOrientation&&orientOptions.length>1&&(
           <button onClick={()=>setOrientation(o=>(o+1)%orientOptions.length)} style={{flex:1,padding:"7px 8px",background:"rgba(20,15,35,.8)",border:"1px solid rgba(90,70,140,.4)",color:"#8070a0",borderRadius:6,cursor:"pointer",fontWeight:400,fontSize:11,letterSpacing:.5,fontFamily:"'IM Fell English',serif"}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M3 3h8v8H3V3m0 10h8v8H3v-8m10-10h8v8h-8V3m0 10h8v8h-8v-8Z"/></svg>Layout</button>
         )}
-        <button onClick={()=>setCoin(true)} style={{flex:1,padding:"7px 8px",background:"rgba(30,15,0,.8)",border:`1px solid ${AMBER}66`,color:AMBER,borderRadius:4,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2v2m0-4h-2V7h2v6Z"/></svg>Coin</button>
+        <button onClick={()=>setCoin(true)} style={{flex:1,padding:"7px 8px",background:"rgba(30,15,0,.8)",border:\`1px solid \${AMBER}66\`,color:AMBER,borderRadius:4,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2v2m0-4h-2V7h2v6Z"/></svg>Coin</button>
         <div style={{flex:2,display:"flex",gap:4}}>
           <select value={diceType} onChange={e=>setDiceType(Number(e.target.value))} style={{flex:1,background:"rgba(10,6,0,.8)",border:"1px solid rgba(80,65,40,.4)",color:"#8a7050",borderRadius:6,padding:"7px 4px",fontSize:11,outline:"none",colorScheme:"dark",fontFamily:"'IM Fell English',serif"}}>
             {[[4,"D4"],[6,"D6"],[8,"D8"],[10,"D10"],[12,"D12"],[20,"D20"],[100,"D100"]].map(([d,l])=><option key={d} value={d}>{l}</option>)}
           </select>
-          <button onClick={()=>setDice(diceType)} style={{flex:1,padding:"7px 8px",background:"rgba(30,15,0,.8)",border:`1px solid ${AMBER}66`,color:AMBER,borderRadius:4,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m4 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2m6 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2M9 15a1 1 0 1 0 0 2 1 1 0 0 0 0-2m6-8a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-3 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg>Roll</button>
+          <button onClick={()=>setDice(diceType)} style={{flex:1,padding:"7px 8px",background:"rgba(30,15,0,.8)",border:\`1px solid \${AMBER}66\`,color:AMBER,borderRadius:4,cursor:"pointer",fontWeight:700,fontSize:11}}><svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={{display:"inline-block",verticalAlign:"text-top",marginRight:4}}><path fill="currentColor" d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m4 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2m6 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2M9 15a1 1 0 1 0 0 2 1 1 0 0 0 0-2m6-8a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-3 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg>Roll</button>
         </div>
       </div>
 
@@ -1299,7 +1299,7 @@ function fetchScryfallImg(cardName,onResult){
   if(scryfallMemory[key]){onResult(scryfallMemory[key]);return;}
   if(scryfallPending[key]){scryfallPending[key].push(onResult);return;}
   scryfallPending[key]=[onResult];
-  fetch(`https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(cardName)}&format=image&version=art_crop`,{headers:{"Accept":"image/jpeg"}})
+  fetch(\`https://api.scryfall.com/cards/named?fuzzy=\${encodeURIComponent(cardName)}&format=image&version=art_crop\`,{headers:{"Accept":"image/jpeg"}})
     .then(r=>{if(!r.ok)throw new Error("not found");return r.blob();})
     .then(blob=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(blob);}))
     .then(dataUrl=>{
@@ -1587,7 +1587,7 @@ export default function App(){
 
   function deckStats(){
     const map={};
-    games.forEach(g=>g.players?.forEach(p=>{if(!p.deck)return;const k=`${p.playerIdx}::${p.deck}`;if(!map[k])map[k]={deck:p.deck,ownerIdx:p.playerIdx,played:0,won:0};map[k].played++;if(p.won)map[k].won++;}));
+    games.forEach(g=>g.players?.forEach(p=>{if(!p.deck)return;const k=\`\${p.playerIdx}::\${p.deck}\`;if(!map[k])map[k]={deck:p.deck,ownerIdx:p.playerIdx,played:0,won:0};map[k].played++;if(p.won)map[k].won++;}));
     return Object.values(map).sort((a,b)=>b.won-a.won||b.played-a.played);
   }
 
@@ -1611,7 +1611,7 @@ export default function App(){
 
   /* ========================================================================== */
   return(
-    <div onTouchStart={unlockGlobalAudio} style={{minHeight:"100vh",background:`url(${APP_BG}) center top / min(100%, 900px) auto repeat-y #0e0c10`,fontFamily:"'IM Fell English',serif",color:PARCHMENT,paddingBottom:110,position:"relative"}}>
+    <div onTouchStart={unlockGlobalAudio} style={{minHeight:"100vh",background:\`url(\${APP_BG}) center top / min(100%, 900px) auto repeat-y #0e0c10\`,fontFamily:"'IM Fell English',serif",color:PARCHMENT,paddingBottom:110,position:"relative"}}>
       {/* Readability overlay */}
       <div style={{position:"fixed",inset:0,background:"rgba(6,3,2,.22)",pointerEvents:"none",zIndex:0}}/>
 
@@ -1677,8 +1677,8 @@ export default function App(){
                 {PLAYERS.map((p,i)=>{const on=liveGame.includes(i);return(
                   <button key={i} onClick={()=>setLiveGame(prev=>{const next=on&&prev.length>2?prev.filter(x=>x!==i):[...new Set([...prev,i])];return next.sort((a,b)=>a-b);})}
                     style={{flex:1,padding:"8px 4px",borderRadius:10,cursor:"pointer",
-                      background:on?`${p.color}22`:"rgba(20,16,28,.8)",
-                      border:`2px solid ${on?p.color:"rgba(90,72,120,.3)"}`,
+                      background:on?\`\${p.color}22\`:"rgba(20,16,28,.8)",
+                      border:\`2px solid \${on?p.color:"rgba(90,72,120,.3)"}\`,
                       display:"flex",flexDirection:"column",alignItems:"center",gap:4,transition:"all .2s"}}>
                     <Avatar idx={i} src={avatars[i]} size={36}/>
                     <span style={{fontSize:10,fontWeight:700,color:on?p.color:"#6a5840",textTransform:"uppercase",letterSpacing:.5,fontFamily:"'Cinzel',serif"}}>{p.name}</span>
@@ -1693,34 +1693,34 @@ export default function App(){
                   const c=liveGame.length;
                   const W=60,H=72; // fixed size for all layouts
                   // cell helper
-                  const cell=(x,y,w,h,dim=false)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="2" fill="rgba(180,140,220,${dim?.15:.28})" stroke="rgba(180,140,220,${dim?.35:.6})" strokeWidth="1.5"/>`;
+                  const cell=(x,y,w,h,dim=false)=>\`<rect x="\${x}" y="\${y}" width="\${w}" height="\${h}" rx="2" fill="rgba(180,140,220,\${dim?.15:.28})" stroke="rgba(180,140,220,\${dim?.35:.6})" strokeWidth="1.5"/>\`;
                   // person icon with rotation: 0=normal(up), 180=upside-down, 90=left, 270=right
                   const icon=(cx,cy,rot=0)=>{
                     const col="rgba(220,190,255,.85)";
-                    return `<g transform="rotate(${rot},${cx},${cy})"><circle cx="${cx}" cy="${cy-3}" r="3" fill="${col}"/><rect x="${cx-4}" y="${cy+1}" width="8" height="6" rx="1" fill="${col}"/></g>`;
+                    return \`<g transform="rotate(\${rot},\${cx},\${cy})"><circle cx="\${cx}" cy="\${cy-3}" r="3" fill="\${col}"/><rect x="\${cx-4}" y="\${cy+1}" width="8" height="6" rx="1" fill="\${col}"/></g>\`;
                   };
                   const layouts2=[
-                    `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">${cell(3,3,54,29)}${icon(30,18,180)}${cell(3,38,54,29,true)}${icon(30,53,0)}</svg>`,
+                    \`<svg viewBox="0 0 \${W} \${H}" width="\${W}" height="\${H}" xmlns="http://www.w3.org/2000/svg">\${cell(3,3,54,29)}\${icon(30,18,180)}\${cell(3,38,54,29,true)}\${icon(30,53,0)}</svg>\`,
                   ];
                   const layouts3=[
                     // 1 top, 2 bottom
-                    `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">${cell(3,3,54,29)}${icon(30,18,180)}${cell(3,38,24,29,true)}${icon(15,53,0)}${cell(33,38,24,29,true)}${icon(45,53,0)}</svg>`,
+                    \`<svg viewBox="0 0 \${W} \${H}" width="\${W}" height="\${H}" xmlns="http://www.w3.org/2000/svg">\${cell(3,3,54,29)}\${icon(30,18,180)}\${cell(3,38,24,29,true)}\${icon(15,53,0)}\${cell(33,38,24,29,true)}\${icon(45,53,0)}</svg>\`,
                     // 2 top, 1 bottom
-                    `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">${cell(3,3,24,29)}${icon(15,18,180)}${cell(33,3,24,29)}${icon(45,18,180)}${cell(3,38,54,29,true)}${icon(30,53,0)}</svg>`,
+                    \`<svg viewBox="0 0 \${W} \${H}" width="\${W}" height="\${H}" xmlns="http://www.w3.org/2000/svg">\${cell(3,3,24,29)}\${icon(15,18,180)}\${cell(33,3,24,29)}\${icon(45,18,180)}\${cell(3,38,54,29,true)}\${icon(30,53,0)}</svg>\`,
                   ];
                   const layouts4=[
                     // 3-row: top rot180, mid-left rot90, mid-right rot270, bottom rot0
-                    `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">${cell(3,3,54,18)}${icon(30,12,180)}${cell(3,25,24,22,true)}${icon(15,36,90)}${cell(33,25,24,22,true)}${icon(45,36,270)}${cell(3,51,54,18,true)}${icon(30,60,0)}</svg>`,
+                    \`<svg viewBox="0 0 \${W} \${H}" width="\${W}" height="\${H}" xmlns="http://www.w3.org/2000/svg">\${cell(3,3,54,18)}\${icon(30,12,180)}\${cell(3,25,24,22,true)}\${icon(15,36,90)}\${cell(33,25,24,22,true)}\${icon(45,36,270)}\${cell(3,51,54,18,true)}\${icon(30,60,0)}</svg>\`,
                     // 2x2: top rot180, bottom rot0
-                    `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">${cell(3,3,24,29)}${icon(15,18,180)}${cell(33,3,24,29)}${icon(45,18,180)}${cell(3,38,24,29,true)}${icon(15,53,0)}${cell(33,38,24,29,true)}${icon(45,53,0)}</svg>`,
+                    \`<svg viewBox="0 0 \${W} \${H}" width="\${W}" height="\${H}" xmlns="http://www.w3.org/2000/svg">\${cell(3,3,24,29)}\${icon(15,18,180)}\${cell(33,3,24,29)}\${icon(45,18,180)}\${cell(3,38,24,29,true)}\${icon(15,53,0)}\${cell(33,38,24,29,true)}\${icon(45,53,0)}</svg>\`,
                     // pinwheel: top-left rot90, top-right rot270, bottom-left rot90, bottom-right rot270
-                    `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">${cell(3,3,24,29)}${icon(15,18,90)}${cell(33,3,24,29)}${icon(45,18,270)}${cell(3,38,24,29,true)}${icon(15,53,90)}${cell(33,38,24,29,true)}${icon(45,53,270)}</svg>`,
+                    \`<svg viewBox="0 0 \${W} \${H}" width="\${W}" height="\${H}" xmlns="http://www.w3.org/2000/svg">\${cell(3,3,24,29)}\${icon(15,18,90)}\${cell(33,3,24,29)}\${icon(45,18,270)}\${cell(3,38,24,29,true)}\${icon(15,53,90)}\${cell(33,38,24,29,true)}\${icon(45,53,270)}</svg>\`,
                   ];
                   const layouts=c===2?layouts2:c===3?layouts3:layouts4;
                   return layouts.map((svgStr,i)=>(
                     <button key={i} onClick={()=>setTableOrientation(i)} style={{
                       flex:1,padding:4,borderRadius:8,height:84,
-                      border:`2px solid ${tableOrientation===i?"rgba(140,100,240,.8)":"rgba(90,72,120,.3)"}`,
+                      border:\`2px solid \${tableOrientation===i?"rgba(140,100,240,.8)":"rgba(90,72,120,.3)"}\`,
                       background:tableOrientation===i?"rgba(100,80,200,.25)":"rgba(16,12,24,.7)",
                       cursor:"pointer",transition:"all .15s",
                       display:"flex",alignItems:"center",justifyContent:"center",
@@ -1737,8 +1737,8 @@ export default function App(){
               {PLAYERS.map((p,i)=>{const s=allStats.find(x=>x.idx===i);return(
                 <div key={i} style={{
                   borderRadius:10,overflow:"hidden",position:"relative",
-                  border:`1px solid ${p.color}66`,
-                  boxShadow:`0 0 0 1px rgba(0,0,0,.7),0 6px 24px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05)`,
+                  border:\`1px solid \${p.color}66\`,
+                  boxShadow:\`0 0 0 1px rgba(0,0,0,.7),0 6px 24px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05)\`,
                   background:"#0e0c10",
                   cursor:"pointer",
                 }}>
@@ -1749,12 +1749,12 @@ export default function App(){
                       <input type="file" accept="image/*" style={{display:"none"}} onChange={e=>handleUpload(i,e)}/>
                     </label>
                     {/* Player colour overlay at bottom of art */}
-                    <div style={{position:"absolute",bottom:0,left:0,right:0,height:40,background:`linear-gradient(to top,${p.color}cc,transparent)`}}/>
+                    <div style={{position:"absolute",bottom:0,left:0,right:0,height:40,background:\`linear-gradient(to top,\${p.color}cc,transparent)\`}}/>
                     {/* Player name over art bottom */}
                     <div style={{position:"absolute",bottom:8,left:0,right:0,textAlign:"center",fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:16,color:GOLD_LIGHT,letterSpacing:1,textTransform:"uppercase",textShadow:"0 1px 6px rgba(0,0,0,.95)"}}>{p.name}</div>
                   </div>
                   {/* Stats frame - bottom 1/3 */}
-                  <div style={{background:`linear-gradient(180deg,${p.color}22,rgba(14,12,16,.95))`,padding:"8px 6px 10px",display:"flex",justifyContent:"space-around",alignItems:"center",borderTop:`1px solid ${p.color}44`}}>
+                  <div style={{background:\`linear-gradient(180deg,\${p.color}22,rgba(14,12,16,.95))\`,padding:"8px 6px 10px",display:"flex",justifyContent:"space-around",alignItems:"center",borderTop:\`1px solid \${p.color}44\`}}>
                     {[["G",s?.played||0,PARCHMENT_DIM],["W",s?.won||0,s?.won?p.color:PARCHMENT_DARK],["WIN%",s?.played?(s?.pct)+"%":"--",s?.pct>50?p.text:PARCHMENT_DARK]].map(([l,v,c])=>(
                       <div key={l} style={{textAlign:"center"}}>
                         <div style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:18,color:c,lineHeight:1}}>{v}</div>
@@ -1776,7 +1776,7 @@ export default function App(){
                     <Dot idx={s.idx} size={8}/>
                     <span style={{flex:1,fontWeight:700,fontSize:14,fontFamily:"'Cinzel',serif",color:PARCHMENT,textTransform:"uppercase",letterSpacing:.3}}>{p.name}</span>
                     <span style={{fontSize:11,color:PARCHMENT_DARK,marginRight:4,fontFamily:"'Cinzel',serif"}}>{s.played}G</span>
-                    <span style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:18,color:s.won>0?p.color:PARCHMENT_DARK,minWidth:28,textAlign:"center",textShadow:s.won>0?`0 0 10px ${p.color}88`:"none"}}>{s.won}W</span>
+                    <span style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:18,color:s.won>0?p.color:PARCHMENT_DARK,minWidth:28,textAlign:"center",textShadow:s.won>0?\`0 0 10px \${p.color}88\`:"none"}}>{s.won}W</span>
                     {s.played>0&&<Chip color={s.pct>50?p.color:PARCHMENT_DARK}>{s.pct}%</Chip>}
                   </div>
                 );})}
@@ -1793,7 +1793,7 @@ export default function App(){
             <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:18}}>
               {[["1","Players"],["2","Details"]].map(([n,lbl],i)=>(
                 <div key={n} style={{display:"flex",alignItems:"center",gap:6}}>
-                  <div style={{width:26,height:26,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:13,background:step>i?"rgba(180,145,40,.25)":step===i+1?"rgba(180,145,40,.15)":"rgba(18,16,26,.8)",border:`1.5px solid ${step===i+1?AMBER:step>i?"rgba(180,145,40,.6)":"rgba(90,72,120,.4)"}`,color:step===i+1?GOLD_LIGHT:step>i?AMBER:PARCHMENT_DARK}}>{n}</div>
+                  <div style={{width:26,height:26,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:13,background:step>i?"rgba(180,145,40,.25)":step===i+1?"rgba(180,145,40,.15)":"rgba(18,16,26,.8)",border:\`1.5px solid \${step===i+1?AMBER:step>i?"rgba(180,145,40,.6)":"rgba(90,72,120,.4)"}\`,color:step===i+1?GOLD_LIGHT:step>i?AMBER:PARCHMENT_DARK}}>{n}</div>
                   <span style={{fontSize:12,fontWeight:400,color:step===i+1?PARCHMENT:PARCHMENT_DARK,fontFamily:"'Cinzel',serif"}}>{lbl}</span>
                   {i<1&&<div style={{width:20,height:1,background:"rgba(90,72,120,.45)"}}/>}
                 </div>
@@ -1805,11 +1805,11 @@ export default function App(){
                 <SLabel>Who's playing tonight?</SLabel>
                 <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:20}}>
                   {PLAYERS.map((p,i)=>{const on=selPlayers.includes(i);return(
-                    <button key={i} onClick={()=>setSelPlayers(prev=>on?prev.length>2?prev.filter(x=>x!==i):prev:[...prev,i].sort())} style={{display:"flex",alignItems:"center",gap:12,padding:"11px 14px",borderRadius:11,cursor:"pointer",border:`1px solid ${on?p.color+"88":"#5a3d18"}`,background:on?`${p.color}1a`:"rgba(10,6,0,.5)",transition:"all .15s",width:"100%"}}>
+                    <button key={i} onClick={()=>setSelPlayers(prev=>on?prev.length>2?prev.filter(x=>x!==i):prev:[...prev,i].sort())} style={{display:"flex",alignItems:"center",gap:12,padding:"11px 14px",borderRadius:11,cursor:"pointer",border:\`1px solid \${on?p.color+"88":"#5a3d18"}\`,background:on?\`\${p.color}1a\`:"rgba(10,6,0,.5)",transition:"all .15s",width:"100%"}}>
                       <Avatar idx={i} src={avatars[i]} size={44}/>
                       <Dot idx={i} size={10}/>
                       <span style={{flex:1,fontFamily:"'Cinzel',serif",fontWeight:600,fontSize:16,color:on?"#e8c87a":PARCHMENT_DIM,textAlign:"left",letterSpacing:.5}}>{p.name}</span>
-                      <div style={{width:22,height:22,borderRadius:"50%",border:`1.5px solid ${on?p.color+"88":"#4a3e28"}`,background:on?p.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,color:"#fff",flexShrink:0}}>{ on&&"✓"}</div>
+                      <div style={{width:22,height:22,borderRadius:"50%",border:\`1.5px solid \${on?p.color+"88":"#4a3e28"}\`,background:on?p.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,color:"#fff",flexShrink:0}}>{ on&&"✓"}</div>
                     </button>
                   );})}
                 </div>
@@ -1835,7 +1835,7 @@ export default function App(){
                   <SLabel>Winner</SLabel>
                   <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:18}}>
                     {selPlayers.map(pi=>{const p=PLAYERS[pi];const isW=winnerIdx===pi;return(
-                      <button key={pi} onClick={()=>setWinnerIdx(pi)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",borderRadius:10,cursor:"pointer",width:"100%",background:isW?`${p.color}22`:"rgba(10,6,0,.5)",border:`1px solid ${isW?p.color+"88":"#5a3d18"}`,transition:"all .15s"}}>
+                      <button key={pi} onClick={()=>setWinnerIdx(pi)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",borderRadius:10,cursor:"pointer",width:"100%",background:isW?\`\${p.color}22\`:"rgba(10,6,0,.5)",border:\`1px solid \${isW?p.color+"88":"#5a3d18"}\`,transition:"all .15s"}}>
                         <Avatar idx={pi} src={avatars[pi]} size={36}/>
                         <Dot idx={pi} size={9}/>
                         <span style={{flex:1,fontFamily:"'Cinzel',serif",fontWeight:600,fontSize:15,color:isW?"#e8c87a":PARCHMENT_DIM,textAlign:"left"}}>{p.name}</span>
@@ -1851,7 +1851,7 @@ export default function App(){
                         <Avatar idx={pi} src={avatars[pi]} size={28}/>
                         <span style={{width:56,fontSize:13,fontWeight:600,color:p.color,flexShrink:0,textTransform:"uppercase",fontFamily:"'Cinzel',serif",letterSpacing:.5}}>{p.name}</span>
                         {opts.length>0
-                          ?<FSelect value={deckPicks[pi]||""} onChange={e=>setDeckPicks(d=>({...d,[pi]:e.target.value}))}><option value="">-- select deck --</option>{opts.map((o,j)=><option key={j} value={o.deck}>{pi===MATTI?`${o.deck} (${PLAYERS[o.ownerIdx].name})`:o.deck}</option>)}</FSelect>
+                          ?<FSelect value={deckPicks[pi]||""} onChange={e=>setDeckPicks(d=>({...d,[pi]:e.target.value}))}><option value="">-- select deck --</option>{opts.map((o,j)=><option key={j} value={o.deck}>{pi===MATTI?\`\${o.deck} (\${PLAYERS[o.ownerIdx].name})\`:o.deck}</option>)}</FSelect>
                           :<FInput value={deckPicks[pi]||""} onChange={e=>setDeckPicks(d=>({...d,[pi]:e.target.value}))} placeholder="Add decks in Decks tab..." style={{fontSize:12}}/>
                         }
                       </div>
@@ -1864,15 +1864,15 @@ export default function App(){
                     </div>
                     <div style={{display:"flex",flexDirection:"column",gap:8}}>
                       {selPlayers.filter(pi=>pi!==winnerIdx).map(pi=>{const p=PLAYERS[pi];const on=!!couldaWon[pi];return(
-                        <div key={pi} style={{background:"#0d0802",border:`1px solid ${on?"#f5a62366":"#1e1a2e"}`,borderRadius:10,padding:"10px 12px",transition:"border-color .2s"}}>
+                        <div key={pi} style={{background:"#0d0802",border:\`1px solid \${on?"#f5a62366":"#1e1a2e"}\`,borderRadius:10,padding:"10px 12px",transition:"border-color .2s"}}>
                           <div style={{display:"flex",alignItems:"center",gap:10}}>
                             <Avatar idx={pi} src={avatars[pi]} size={28}/><Dot idx={pi} size={8}/>
                             <span style={{flex:1,fontFamily:"'Cinzel',serif",fontWeight:600,fontSize:14,color:on?"#e8c87a":PARCHMENT_DIM}}>{p.name}</span>
-                            <div onClick={()=>setCouldaWon(c=>({...c,[pi]:!c[pi]}))} style={{width:42,height:24,borderRadius:12,background:on?"#c87a1844":"rgba(10,6,0,.5)",border:`1px solid ${on?ORANGE:"#5a3d18"}`,cursor:"pointer",position:"relative",transition:"all .2s",flexShrink:0}}>
+                            <div onClick={()=>setCouldaWon(c=>({...c,[pi]:!c[pi]}))} style={{width:42,height:24,borderRadius:12,background:on?"#c87a1844":"rgba(10,6,0,.5)",border:\`1px solid \${on?ORANGE:"#5a3d18"}\`,cursor:"pointer",position:"relative",transition:"all .2s",flexShrink:0}}>
                               <div style={{position:"absolute",top:3,left:on?19:3,width:16,height:16,borderRadius:"50%",background:on?"#f5c842":"#4a3e28",transition:"left .2s",boxShadow:"0 1px 4px rgba(0,0,0,.4)"}}/>
                             </div>
                           </div>
-                          {on&&<div style={{marginTop:10}}><FInput value={couldaNote[pi]||""} onChange={e=>setCouldaNote(n=>({...n,[pi]:e.target.value}))} placeholder={`Why ${p.name} should've won...`} style={{fontSize:13,borderColor:"#f5a62344",background:"#0c0e16"}}/></div>}
+                          {on&&<div style={{marginTop:10}}><FInput value={couldaNote[pi]||""} onChange={e=>setCouldaNote(n=>({...n,[pi]:e.target.value}))} placeholder={\`Why \${p.name} should've won...\`} style={{fontSize:13,borderColor:"#f5a62344",background:"#0c0e16"}}/></div>}
                         </div>
                       );})}
                     </div>
@@ -1902,8 +1902,8 @@ export default function App(){
                   return(
                     <button key={i} onClick={()=>setPlayerFilter(prev=>{const n=new Set(prev);active?n.delete(i):n.add(i);return n;})}
                       style={{display:"flex",alignItems:"center",gap:5,padding:"5px 10px",borderRadius:20,cursor:"pointer",
-                        border:`1px solid ${active?p.color:"rgba(90,72,120,.3)"}`,
-                        background:active?`${p.color}22`:"rgba(16,12,24,.7)",
+                        border:\`1px solid \${active?p.color:"rgba(90,72,120,.3)"}\`,
+                        background:active?\`\${p.color}22\`:"rgba(16,12,24,.7)",
                         transition:"all .15s"}}>
                       <Avatar idx={i} src={avatars[i]} size={18}/>
                       <span style={{fontSize:10,fontWeight:700,color:active?p.color:"#6a5870",fontFamily:"'Cinzel',serif",textTransform:"uppercase",letterSpacing:.5}}>{p.name}</span>
@@ -1928,7 +1928,7 @@ export default function App(){
               ))}
             </div>
             {filtStats.map((s,rank)=>{const p=PLAYERS[s.idx];return(
-              <div key={s.idx} className="standings-row" style={{borderLeft:`4px solid ${s.played?p.color:"rgba(90,72,120,.3)"}`}}>
+              <div key={s.idx} className="standings-row" style={{borderLeft:\`4px solid \${s.played?p.color:"rgba(90,72,120,.3)"}\`}}>
                 <div style={{padding:"14px 16px",display:"flex",alignItems:"center",gap:14}}>
                   <Dot idx={s.idx} size={11}/>
                   <Avatar idx={s.idx} src={avatars[s.idx]} size={60}/>
@@ -1938,11 +1938,11 @@ export default function App(){
                     {s.played>0&&<div style={{fontSize:11,color:PARCHMENT_DARK,fontFamily:"'Cinzel',serif"}}>{s.pct}% win rate</div>}
                   </div>
                   <div style={{textAlign:"right"}}>
-                    <div style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:38,color:s.won>0?p.color:"#3a2e48",lineHeight:1,textShadow:s.won>0?`0 0 20px ${p.color}88`:"none"}}>{s.won}</div>
+                    <div style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:38,color:s.won>0?p.color:"#3a2e48",lineHeight:1,textShadow:s.won>0?\`0 0 20px \${p.color}88\`:"none"}}>{s.won}</div>
                     <div style={{fontSize:9,color:PARCHMENT_DARK,textTransform:"uppercase",letterSpacing:2,marginTop:2,fontFamily:"'Cinzel',serif"}}>wins</div>
                   </div>
                 </div>
-                {s.played>0&&<div style={{height:3,borderRadius:"0 0 10px 0",overflow:"hidden"}}><div style={{height:"100%",width:`${s.pct}%`,background:`linear-gradient(90deg,${p.color}aa,${p.color})`,borderRadius:2}}/></div>}
+                {s.played>0&&<div style={{height:3,borderRadius:"0 0 10px 0",overflow:"hidden"}}><div style={{height:"100%",width:\`\${s.pct}%\`,background:\`linear-gradient(90deg,\${p.color}aa,\${p.color})\`,borderRadius:2}}/></div>}
               </div>
             );})}
             {games.length===0&&<Surface style={{padding:40,textAlign:"center"}}><p style={{color:"#4a3e28",fontStyle:"italic",fontSize:14}}>No games recorded yet.</p></Surface>}
@@ -1980,7 +1980,7 @@ export default function App(){
               const dm={};
               games.forEach(g=>g.players?.forEach(p=>{
                 if(!p.deck)return;
-                const k=`${p.playerIdx}::${p.deck}`;
+                const k=\`\${p.playerIdx}::\${p.deck}\`;
                 if(!dm[k])dm[k]={playerIdx:p.playerIdx,deck:p.deck,played:0,won:0};
                 dm[k].played++;if(p.won)dm[k].won++;
               }));
@@ -2038,7 +2038,7 @@ export default function App(){
                         <Avatar idx={pair.a} src={avatars[pair.a]} size={26}/>
                         <span style={{fontFamily:"'Cinzel',serif",fontSize:11,fontWeight:700,color:aLead?pa.color:PARCHMENT_DARK,minWidth:30,textAlign:"center"}}>{pair.aW}W</span>
                         <div style={{flex:1,height:4,borderRadius:2,background:"rgba(90,72,120,.2)",overflow:"hidden",position:"relative"}}>
-                          {pair.total>0&&<div style={{position:"absolute",left:0,top:0,height:"100%",width:`${pair.aW/pair.total*100}%`,background:pa.color,borderRadius:2}}/>}
+                          {pair.total>0&&<div style={{position:"absolute",left:0,top:0,height:"100%",width:\`\${pair.aW/pair.total*100}%\`,background:pa.color,borderRadius:2}}/>}
                         </div>
                         <span style={{fontFamily:"'Cinzel',serif",fontSize:11,fontWeight:700,color:bLead?pb.color:PARCHMENT_DARK,minWidth:30,textAlign:"center"}}>{pair.bW}W</span>
                         <Avatar idx={pair.b} src={avatars[pair.b]} size={26}/>
@@ -2128,7 +2128,7 @@ export default function App(){
                 const wp=PLAYERS[winner?.playerIdx??0];
                 const copers=others.filter(p=>p.couldaWon);
                 return(
-                  <div key={g.id} style={{background:"linear-gradient(175deg,#1e1c2a,#15121e)",borderRadius:10,padding:"14px 14px 6px",marginBottom:10,border:"1px solid rgba(90,72,120,.35)",borderLeft:`3px solid ${wp.color}`}}>
+                  <div key={g.id} style={{background:"linear-gradient(175deg,#1e1c2a,#15121e)",borderRadius:10,padding:"14px 14px 6px",marginBottom:10,border:"1px solid rgba(90,72,120,.35)",borderLeft:\`3px solid \${wp.color}\`}}>
                     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
                       <div style={{display:"flex",alignItems:"center",gap:7}}>
                         {(()=>{const loc=LOCATIONS.find(l=>l.id===(g.location||""))||LOCATIONS[LOCATIONS.length-1]; return(<>
@@ -2142,7 +2142,7 @@ export default function App(){
                     <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
                       <Avatar idx={winner?.playerIdx??0} src={avatars[winner?.playerIdx??0]} size={44}/>
                       <div>
-                        <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:3}}><span style={{display:"inline-flex",alignItems:"center",padding:"3px 9px",borderRadius:4,background:`${wp.color}28`,color:wp.color,border:`1px solid ${wp.color}66`,fontFamily:"'Cinzel',serif",fontSize:10,fontWeight:700,letterSpacing:.8}}>WINNER</span><span style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:17,color:"#e8c87a"}}>{winner?.name}</span></div>
+                        <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:3}}><span style={{display:"inline-flex",alignItems:"center",padding:"3px 9px",borderRadius:4,background:\`\${wp.color}28\`,color:wp.color,border:\`1px solid \${wp.color}66\`,fontFamily:"'Cinzel',serif",fontSize:10,fontWeight:700,letterSpacing:.8}}>WINNER</span><span style={{fontFamily:"'Cinzel',serif",fontWeight:700,fontSize:17,color:"#e8c87a"}}>{winner?.name}</span></div>
                         {winner?.deck&&<span style={{fontSize:12,color:PARCHMENT_DIM,fontStyle:"italic"}}>{winner.deck}</span>}
                       </div>
                     </div>
@@ -2216,7 +2216,7 @@ export default function App(){
                   {editGame.players.map((p,i)=>{
                     const pl=PLAYERS[p.playerIdx];
                     return(
-                      <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 10px",borderRadius:6,background:p.won?`${pl.color}22`:"rgba(18,16,26,.5)",border:`1px solid ${p.won?pl.color:"rgba(90,72,120,.3)"}`}}>
+                      <div key={i} style={{display:"flex",alignItems:"center",gap:8,padding:"6px 10px",borderRadius:6,background:p.won?\`\${pl.color}22\`:"rgba(18,16,26,.5)",border:\`1px solid \${p.won?pl.color:"rgba(90,72,120,.3)"}\`}}>
                         <input type="radio" name="winner" checked={p.won} onChange={()=>setEditGame(g=>({...g,players:g.players.map((x,j)=>({...x,won:j===i}))}))} style={{accentColor:pl.color}}/>
                         <Avatar idx={p.playerIdx} src={avatars[p.playerIdx]} size={24}/>
                         <span style={{flex:1,fontFamily:"'Cinzel',serif",fontSize:12,color:pl.color}}>{pl.name}</span>
@@ -2331,7 +2331,7 @@ export default function App(){
             )}
             <div style={{display:"flex",gap:6,marginBottom:14}}>
               {[0,1,3].map(i=>{const p=PLAYERS[i];const on=dmPlayer===i;return(
-                <button key={i} onClick={()=>setDmPlayer(i)} style={{flex:1,padding:"10px 4px",borderRadius:10,cursor:"pointer",background:on?`${p.color}22`:"rgba(18,16,26,.7)",border:`1.5px solid ${on?p.color+"99":"rgba(90,72,120,.35)"}`,display:"flex",flexDirection:"column",alignItems:"center",gap:6,transition:"all .15s"}}>
+                <button key={i} onClick={()=>setDmPlayer(i)} style={{flex:1,padding:"10px 4px",borderRadius:10,cursor:"pointer",background:on?\`\${p.color}22\`:"rgba(18,16,26,.7)",border:\`1.5px solid \${on?p.color+"99":"rgba(90,72,120,.35)"}\`,display:"flex",flexDirection:"column",alignItems:"center",gap:6,transition:"all .15s"}}>
                   <Avatar idx={i} src={avatars[i]} size={40}/>
                   <span style={{fontSize:12,fontWeight:400,color:on?p.color:PARCHMENT_DIM,fontFamily:"'IM Fell English',serif"}}>{p.name}</span>
                   <span style={{fontSize:10,color:PARCHMENT_DARK,fontFamily:"'Cinzel',serif"}}>{(decks[i]||[]).length} decks</span>
@@ -2345,7 +2345,7 @@ export default function App(){
               </div>
               <div style={{display:"flex",gap:8,marginBottom:14}}>
                 <FInput value={newDeck} onChange={e=>setNewDeck(e.target.value)} onKeyDown={e=>e.key==="Enter"&&addDeck()} placeholder="Commander or deck name..."/>
-                <button onClick={addDeck} style={{padding:"10px 16px",borderRadius:8,cursor:"pointer",flexShrink:0,background:`${PLAYERS[dmPlayer].color}22`,border:`1.5px solid ${PLAYERS[dmPlayer].color}88`,color:PLAYERS[dmPlayer].text,fontWeight:700,fontSize:12,fontFamily:"'Cinzel',serif",letterSpacing:.5}}>Add</button>
+                <button onClick={addDeck} style={{padding:"10px 16px",borderRadius:8,cursor:"pointer",flexShrink:0,background:\`\${PLAYERS[dmPlayer].color}22\`,border:\`1.5px solid \${PLAYERS[dmPlayer].color}88\`,color:PLAYERS[dmPlayer].text,fontWeight:700,fontSize:12,fontFamily:"'Cinzel',serif",letterSpacing:.5}}>Add</button>
               </div>
               {(decks[dmPlayer]||[]).length===0
                 ?<p style={{color:PARCHMENT_DARK,fontStyle:"italic",fontSize:13,textAlign:"center",padding:"12px 0",fontFamily:"'IM Fell English',serif"}}>No decks yet -- add one above.</p>
@@ -2377,7 +2377,7 @@ export default function App(){
                 ?<p style={{color:"#4a3e28",fontSize:12,fontStyle:"italic"}}>Add decks to Bas, Koen or Tjeerd above.</p>
                 :<div style={{display:"flex",flexWrap:"wrap",gap:6}}>
                   {decksFor(MATTI).map((o,i)=>{const op=PLAYERS[o.ownerIdx];return(
-                    <div key={i} style={{padding:"5px 10px",borderRadius:8,background:`${op.color}18`,border:`1px solid ${op.color}55`,display:"flex",alignItems:"center",gap:5,borderRadius:6}}>
+                    <div key={i} style={{padding:"5px 10px",borderRadius:8,background:\`\${op.color}18\`,border:\`1px solid \${op.color}55\`,display:"flex",alignItems:"center",gap:5,borderRadius:6}}>
                       <Dot idx={o.ownerIdx} size={7}/><span style={{fontSize:12,color:PARCHMENT_DIM,fontFamily:"'IM Fell English',serif"}}>{o.deck}</span>
                     </div>
                   );})}
@@ -2395,7 +2395,7 @@ export default function App(){
 
             <Surface style={{padding:16,marginBottom:14}}>
               <SLabel>Sound</SLabel>
-              <div onClick={()=>{if(!soundEnabled){unlockGlobalAudio();}setSoundEnabled(s=>!s);}} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 14px",borderRadius:8,border:`1px solid ${soundEnabled?"rgba(80,160,80,.4)":"rgba(180,60,60,.35)"}`,background:soundEnabled?"rgba(30,60,30,.4)":"rgba(28,16,16,.7)",cursor:"pointer"}}>
+              <div onClick={()=>{if(!soundEnabled){unlockGlobalAudio();}setSoundEnabled(s=>!s);}} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 14px",borderRadius:8,border:\`1px solid \${soundEnabled?"rgba(80,160,80,.4)":"rgba(180,60,60,.35)"}\`,background:soundEnabled?"rgba(30,60,30,.4)":"rgba(28,16,16,.7)",cursor:"pointer"}}>
                 {soundEnabled?<svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#c8a060" d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77 0-4.28-2.99-7.86-7-8.77M16.5 12c0-1.77-1-3.29-2.5-4.03V16c1.5-.71 2.5-2.24 2.5-4M3 9v6h4l5 5V4L7 9H3Z"/></svg>:<svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#c8a060" d="M16.5 12c0-1.77-1-3.29-2.5-4.03V7.08l6.51 6.51c-.34.61-.73 1.19-1.18 1.7L16.5 12m2.83 4.83L4.27 1.27 3 2.54l4.26 4.26L3 9v6h4l5 5v-6.73l4.25 4.26c-.67.51-1.42.93-2.25 1.18v2.06A9.077 9.077 0 0 0 17 18.95l2 2.05 1.27-1.27-3.44-3.44M19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71M10.27 4 7.11 7.16 10.27 10 12 8.23V4l-1.73.05Z"/></svg>}
                 <div>
                   <div style={{fontFamily:"'Cinzel',serif",fontSize:12,color:soundEnabled?"#70c870":"#c05050",fontWeight:700,letterSpacing:.8}}>{soundEnabled?"Sound on — tap to mute":"Sound off — tap to enable"}</div>
