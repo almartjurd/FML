@@ -2485,6 +2485,8 @@ function App(){
     </div>
   );
 }
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
 `;
     try{
       document.getElementById('loader-sub').textContent='Starting...';
